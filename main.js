@@ -12,6 +12,8 @@ $(document).ready(function(){
   })
 */
 
+
+
   $.getJSON({
     url: `${site}/todos`,
     headers: {
@@ -26,13 +28,15 @@ $(document).ready(function(){
       $("#to_do_list").append(todoHTML);
 
       var countChecked = function() {
-      var n = $("li").length - $("input:checked").length;
-      $( "#tasks_left" ).text( n + " tasks" + (n === 1 ? " is" : " are") + " left to do!" );
+        var n = $("li").length - $("input:checked").length;
+        $( "#tasks_left" ).text( n + " tasks" + (n === 1 ? " is" : " are") + " left to do!" );
       };
       countChecked();
       $( "input[type=checkbox]" ).on( "click", countChecked );
+
       }
   });
+
 
   $("form").submit(function(event){
     $.post({
@@ -44,7 +48,10 @@ $(document).ready(function(){
       success: function(response){
         $("#to_do_list li:last").data("id", response.data.id)
       }
-    });
+
+    })
+
+
 
     var todoHTML = `<li>${$(this).find("input").val()}<input type="checkbox" ${this.attributes.isComplete ? "checked" : ""}>
     <button type="button" name="button" class="delete">Delete</button>
@@ -53,6 +60,15 @@ $(document).ready(function(){
 
     $("input").val("");
     event.preventDefault();
+
+    var countChecked = function() {
+      var n = $("li").length - $("input:checked").length;
+      $( "#tasks_left" ).text( n + " tasks" + (n === 1 ? " is" : " are") + " left to do!" );
+    };
+    countChecked();
+    $( "input[type=checkbox]" ).on( "click", countChecked );
+
+
   })
 
   $("#to_do_list").on("click", ".delete", function(event){
@@ -69,5 +85,28 @@ $(document).ready(function(){
     })
   })
 
+  $("#to_do_list").on("change", ".checkbox", function(event){
+    console.log("checked");
+    var that = $(this);
+    $.ajax({
+      url: `${site}/todos/${that.parent().data("id")}`,
+      type: "PUT",
+      headers: {
+        "Authorization": "Token token=supadupasecret"
+      },
+
+      success: function(data){
+        console.log(data);
+        console.log(that);
+        if (that.prop("checked")) {
+          
+        } else {
+          console.log("uncheck this item");
+          that.parent().remove()
+        }
+
+      }
+    })
+  })
 
 })

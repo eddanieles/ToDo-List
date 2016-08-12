@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Testing ToDo List</title>
+  </head>
+  <body>
+
+
+    <form class="" action="index.html" method="post">
+      <p>
+        Skills:
+        <label for="">Javascript<input type="checkbox" name="skills" value="Javascript"></label>
+        <label for="">jQuery<input type="checkbox" name="skills" value="jQuery"></label>
+        <label for="">Java<input type="checkbox" name="skills" value="Java"></label>
+        <label for="">IOS<input type="checkbox" name="skills" value="IOS"></label>
+      </p>
+
+      <p>
+        Preferred Cities:
+        <label for="">New York<input type="checkbox" name="cities" value="New York"></label>
+        <label for="">LA<input type="checkbox" name="cities" value="LA"></label>
+        <label for="">San Fran<input type="checkbox" name="cities" value="San Fran"></label>
+
+      </p>
+
+      
+    </form>
+
+    <div id="divskills" class="">
+    </div>
+  <br />
+    <div id="divcities"class="">
+    </div>
+
+    <script   src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    $('input[name="skills"]').click(function(){
+      getCheckedCheckboxs("skills");
+    })
+
+    $('input[name="cities"]').click(function(){
+      getCheckedCheckboxs("cities");
+    })
+
+      var getCheckedCheckboxs = function(groupName) {
+        var result = $('input[name="' + groupName + '"]:checked');
+        if (result.length > 0) {
+          var resultString = result.length + " checkboxes is checked</br>";
+
+          result.each(function(){
+            resultString += $(this).val() + "</br>";
+          })
+
+          $("#div" + groupName).html(resultString);
+        } else {
+          $("#div" + groupName).html("No boxes are checked")
+        }
+
+    }
+  </script>
+  </body>
+</html>
