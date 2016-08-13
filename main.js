@@ -20,8 +20,10 @@ $(document).ready(function(){
       "Authorization": "Token token=supadupasecret"
     },
     success: (response) => {
+      console.log($(response));
+
       var todoHTML = response.data.map((item) => `<li data-id=${item.id}>
-      ${item.attributes.todo}<input type="checkbox" class="checkbox" ${item.attributes.isComplete ? "checked" : ""}>
+      ${item.attributes.todo}<input type="checkbox" class="checkbox" ${item.attributes['is-complete'] ? "checked" : ""}>
       <button type="button" name="button" class="delete">Delete</button>
       </li>`);
 
@@ -53,7 +55,7 @@ $(document).ready(function(){
 
 
 
-    var todoHTML = `<li>${$(this).find("input").val()}<input type="checkbox" ${this.attributes.isComplete ? "checked" : ""}>
+    var todoHTML = `<li>${$(this).find("input").val()}<input type="checkbox">
     <button type="button" name="button" class="delete">Delete</button>
     </li>`;
     $("#to_do_list").append(todoHTML);
@@ -85,28 +87,35 @@ $(document).ready(function(){
     })
   })
 
-  $("#to_do_list").on("change", ".checkbox", function(event){
-    console.log("checked");
-    var that = $(this);
-    $.ajax({
-      url: `${site}/todos/${that.parent().data("id")}`,
-      type: "PUT",
-      headers: {
-        "Authorization": "Token token=supadupasecret"
-      },
 
-      success: function(data){
-        console.log(data);
-        console.log(that);
-        if (that.prop("checked")) {
-          
-        } else {
-          console.log("uncheck this item");
-          that.parent().remove()
-        }
+  $("#to_do_list").on("change", ".checkbox", function(event) {
+        var item = $(event.target).parent()
+        var isItemCompleted = item.hasClass("completed")
+        var itemId = item.attr("data-id")
+        console.log("clicked item " + itemId + ", which has completed currently set to " + isItemCompleted);
 
-      }
+        var updateRequest = $.ajax({
+            type: "PUT",
+            url: `${site}/todos/` + itemId,
+            headers: {
+                "Authorization": "Token token=supadupasecret"
+            },
+            data: {
+                todo: {isComplete: !isItemCompleted}
+            }
+        })
+
+        updateRequest.done(function(itemData) {
+            if (itemData.data.attributes["is-complete"]) {
+                item.addClass("completed")
+            } else {
+                item.removeClass("completed")
+            }
+        })
+
+
     })
-  })
+
+
 
 })
