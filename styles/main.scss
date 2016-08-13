@@ -1,0 +1,33 @@
+body {
+  font-family: cursive;
+  width: 50%;
+  margin: auto;
+  border: 1px solid #F38195;
+  button:hover {
+    background-color: #F2003D;
+    color: white;
+  }
+}
+
+h1 {
+  background-color: #B0001F;
+  padding: 22px 22px;
+  margin: 0;
+}
+
+#tasks_left {
+  background-color: #F2002B;
+  text-align: center;
+}
+
+#to_do_list {
+  li {
+    span {
+      float: right;
+    }
+  }
+}
+
+form {
+  text-align: center;
+}

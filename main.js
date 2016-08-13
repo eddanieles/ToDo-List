@@ -23,8 +23,8 @@ $(document).ready(function(){
       console.log($(response));
 
       var todoHTML = response.data.map((item) => `<li data-id=${item.id}>
-      ${item.attributes.todo}<input type="checkbox" class="checkbox" ${item.attributes['is-complete'] ? "checked" : ""}>
-      <button type="button" name="button" class="delete">Delete</button>
+      ${item.attributes.todo}<span><input type="checkbox" class="checkbox" ${item.attributes['is-complete'] ? "checked" : ""}>
+      <button type="button" name="button" class="delete">Delete</button></span>
       </li>`);
 
       $("#to_do_list").append(todoHTML);
@@ -41,6 +41,7 @@ $(document).ready(function(){
 
 
   $("form").submit(function(event){
+
     $.post({
       url: `${site}/todos`,
       headers: {
