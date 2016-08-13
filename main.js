@@ -23,11 +23,13 @@ $(document).ready(function(){
       console.log($(response));
 
       var todoHTML = response.data.map((item) => `<li data-id=${item.id}>
-      ${item.attributes.todo}<span><input type="checkbox" class="checkbox" ${item.attributes['is-complete'] ? "checked" : ""}>
+      ${item.attributes.todo}<span class="checked"> (finish)</span><span class="cbAndDelete">
+      <input type="checkbox" class="checkbox" ${item.attributes['is-complete'] ? "checked" : ""}>
       <button type="button" name="button" class="delete">Delete</button></span>
       </li>`);
 
       $("#to_do_list").append(todoHTML);
+      $(".checked").hide();
 
       var countChecked = function() {
         var n = $("li").length - $("input:checked").length;
@@ -90,6 +92,7 @@ $(document).ready(function(){
 
 
   $("#to_do_list").on("change", ".checkbox", function(event) {
+
         var item = $(event.target).parent()
         var isItemCompleted = item.hasClass("completed")
         var itemId = item.attr("data-id")

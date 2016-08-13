@@ -16,7 +16,7 @@ h1 {
   background-color: #F2002B;
   text-align: center; }
 
-#to_do_list li span {
+#to_do_list li .cbAndDelete {
   float: right; }
 
 form {
