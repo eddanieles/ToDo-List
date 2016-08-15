@@ -25,7 +25,7 @@ $(document).ready(function(){
     success: (response) => {
       console.log($(response));
 
-      var todoHTML = response.data.map((item) => `<li data-id=${item.id}>
+      var todoHTML = response.data.map((item) => `<li data-id=${item.id} class=${item.attributes["is-complete"]? "completed" : "" }>
       ${item.attributes.todo}<span class="checked"> (finish)</span><span class="cbAndDelete">
       <input type="checkbox" class="checkbox" ${item.attributes['is-complete'] ? "checked" : ""}>
       <button type="button" name="button" class="delete">Delete</button></span>
@@ -74,13 +74,13 @@ $(document).ready(function(){
   $("#to_do_list").on("click", ".delete", function(event){
     var that = $(this);
     $.ajax({
-      url: `${site}/todos/${that.parent().data("id")}`,
+      url: `${site}/todos/${that.closest("li").data("id")}`,
       type: "DELETE",
       headers: {
         "Authorization": "Token token=supadupasecret"
       },
       success: function(data){
-        that.parent().remove()
+        that.closest("li").remove()
       }
     })
   })
@@ -88,7 +88,7 @@ $(document).ready(function(){
 
   $("#to_do_list").on("change", ".checkbox", function(event) {
 
-        var item = $(event.target).parent();
+        var item = $(event.target).closest("li");
         var isItemCompleted = item.hasClass("completed")
         var itemId = item.attr("data-id");
         console.log("clicked item " + itemId + ", which has completed currently set to " + isItemCompleted);
