@@ -93,9 +93,9 @@ $(document).ready(function(){
 
   $("#to_do_list").on("change", ".checkbox", function(event) {
 
-        var item = $(event.target).parent()
+        var item = $(event.target).parent();
         var isItemCompleted = item.hasClass("completed")
-        var itemId = item.attr("data-id")
+        var itemId = item.attr("data-id");
         console.log("clicked item " + itemId + ", which has completed currently set to " + isItemCompleted);
 
         var updateRequest = $.ajax({
