@@ -57,8 +57,8 @@ $(document).ready(function(){
 
 
 
-    var todoHTML = `<li>${$(this).find("input").val()}<input type="checkbox">
-    <button type="button" name="button" class="delete">Delete</button>
+    var todoHTML = `<li>${$(this).find("input").val()}<span class="cbAndDelete"><input type="checkbox">
+    <button type="button" name="button" class="delete">Delete</button></span>
     </li>`;
     $("#to_do_list").append(todoHTML);
 
