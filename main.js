@@ -12,7 +12,10 @@ $(document).ready(function(){
   })
 */
 
-
+  var countChecked = function() {
+    var n = $("li").length - $("input:checked").length;
+    $( "#tasks_left" ).text( n + " tasks" + (n === 1 ? " is" : " are") + " left to do!" );
+  };
 
   $.getJSON({
     url: `${site}/todos`,
@@ -31,10 +34,6 @@ $(document).ready(function(){
       $("#to_do_list").append(todoHTML);
       $(".checked").hide();
 
-      var countChecked = function() {
-        var n = $("li").length - $("input:checked").length;
-        $( "#tasks_left" ).text( n + " tasks" + (n === 1 ? " is" : " are") + " left to do!" );
-      };
       countChecked();
       $( "input[type=checkbox]" ).on( "click", countChecked );
 
@@ -66,10 +65,6 @@ $(document).ready(function(){
     $("input").val("");
     event.preventDefault();
 
-    var countChecked = function() {
-      var n = $("li").length - $("input:checked").length;
-      $( "#tasks_left" ).text( n + " tasks" + (n === 1 ? " is" : " are") + " left to do!" );
-    };
     countChecked();
     $( "input[type=checkbox]" ).on( "click", countChecked );
 
